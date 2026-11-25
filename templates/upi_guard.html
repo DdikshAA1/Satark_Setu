@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container container-narrow">
+
+  <div style="margin-bottom: 22px;">
+    <span class="section-tag">MODULE 02 • UPI FRAUD GUARD</span>
+    <h2 style="font-size: 1.75rem; margin-bottom: 6px;">
+      {{ 'यूपीआई सुरक्षा कवच' if current_lang == 'hi' else 'UPI Fraud Guard' }}
+    </h2>
+    <p style="font-size: 14px; margin: 0;">
+      {{ 'यूपीआई कलेक्ट रिक्वेस्ट, रिवर्स रिफंड या भुगतान संबंधी निर्देशों की सुरक्षा जांच करें।' if current_lang ==
+      'hi' else 'Verify unexpected UPI collect requests, cashback claims, and incoming payment instructions.' }}
+    </p>
+  </div>
+
+  <!-- The Foundational UPI Rule: Side-by-Side Comparison -->
+  <div class="upi-rule-card">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+      <div>
+        <span class="section-tag">{{ 'मूल सुरक्षा नियम' if current_lang == 'hi' else 'FOUNDATIONAL SAFETY RULE'
+          }}</span>
+        <h3 style="margin: 0; font-size: 1.2rem;">
+          {{ 'पैसे भेजने और प्राप्त करने में अंतर' if current_lang == 'hi' else 'Sending vs Receiving on UPI' }}
+        </h3>
+      </div>
+    </div>
+
+    <div class="upi-rule-grid">
+      <div class="upi-rule-box upi-rule-send">
+        <h5>
+          <i data-lucide="arrow-up-right" style="width: 15px; height: 15px; color: var(--brand-navy);"></i>
+          <span>{{ '1. पैसे भेजते समय (Debit)' if current_lang == 'hi' else '1. When You SEND Money (Debit)' }}</span>
+        </h5>
+        <p style="color: var(--text-secondary); margin: 0;">
+          {{ 'खरीदारी या पैसे ट्रांसफर करते समय आपको अपना यूपीआई पिन डालना होता है।' if current_lang == 'hi' else 'You
+          only enter your UPI PIN when authorizing money to leave your bank account.' }}
+        </p>
+      </div>
+
+      <div class="upi-rule-box upi-rule-receive">
+        <h5>
+          <i data-lucide="ban" style="width: 15px; height: 15px; color: #B93838;"></i>
+          <span style="color: #902626;">{{ '2. पैसे प्राप्त करते समय (Credit)' if current_lang == 'hi' else '2. When You
+            RECEIVE Money (Credit)' }}</span>
+        </h5>
+        <p style="color: #7A2828; margin: 0; font-weight: 600;">
+          {{ t.upi_pin_golden_rule }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="surface-card">
+    <div style="margin-bottom: 12px;">
+      <span
+        style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); display: block; margin-bottom: 6px;">
+        {{ 'यूपीआई धोखाधड़ी के आम उदाहरण:' if current_lang == 'hi' else 'Load a UPI scenario:' }}
+      </span>
+      <div class="sample-bar">
+        <button type="button" class="sample-pill sample-upi-pill"
+          data-text="OLX buyer sent QR code: Scan this QR code and enter UPI PIN to receive advance token money of Rs 2,000 for your sofa."
+          data-vpa="buyer_verified@okicici" data-amt="2000">
+          🛋️ {{ 'ओएलएक्स क्यूआर धोखा' if current_lang == 'hi' else 'OLX QR to Receive Trap' }}
+        </button>
+        <button type="button" class="sample-pill sample-upi-pill"
+          data-text="PhonePe reward notice: Enter your 6-digit secret UPI PIN to claim festival cashback of Rs 4,500 directly in account."
+          data-vpa="reward-claim@paytm" data-amt="4500">
+          🎉 {{ 'कैशबैक कलेक्ट रिक्वेस्ट' if current_lang == 'hi' else 'Cashback Collect Request' }}
+        </button>
+        <button type="button" class="sample-pill sample-upi-pill"
+          data-text="Swiggy food order payment checkout via UPI Gateway." data-vpa="swiggy@hdfcbank" data-amt="480">
+          🍔 {{ 'सामान्य सुरक्षित भुगतान' if current_lang == 'hi' else 'Legitimate Swiggy Checkout' }}
+        </button>
+      </div>
+    </div>
+
+    <form id="upiGuardForm">
+      <div class="form-group">
+        <label class="form-label" for="upiTextInput">
+          <i data-lucide="file-text" style="width: 14px; height: 14px; vertical-align: -2px;"></i>
+          <span>{{ 'अनुरोध का विवरण या संदेश' if current_lang == 'hi' else 'Payment Request Note or Situation' }}</span>
+        </label>
+        <textarea id="upiTextInput" class="form-control" rows="3"
+          placeholder="{{ 'सामने वाले ने क्या कहा? (जैसे: क्यूआर कोड स्कैन करके पिन डालो, या पैसे वापस पाने के लिए रिक्वेस्ट अप्रूव करो)...' if current_lang == 'hi' else 'What does the request or caller say? (e.g. enter UPI PIN to receive money, or approve collect request to claim refund)...' }}"></textarea>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px;">
+        <div class="form-group">
+          <label class="form-label" for="vpaInput">
+            <i data-lucide="at-sign" style="width: 13px; height: 13px; vertical-align: -2px;"></i>
+            <span>{{ 'यूपीआई आईडी / वीपीए (वैकल्पिक)' if current_lang == 'hi' else 'UPI ID / VPA (Optional)' }}</span>
+          </label>
+          <input type="text" id="vpaInput" class="form-control" placeholder="e.g. merchant@okhdfcbank or refund@paytm">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="amountInput">
+            <i data-lucide="indian-rupee" style="width: 13px; height: 13px; vertical-align: -2px;"></i>
+            <span>{{ 'राशि (वैकल्पिक)' if current_lang == 'hi' else 'Amount in INR' }}</span>
+          </label>
+          <input type="text" id="amountInput" class="form-control" placeholder="e.g. 2500">
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 8px; margin-top: 4px;">
+        <button type="submit" id="checkUpiBtn" class="btn btn-primary btn-lg">
+          <i data-lucide="shield-check" style="width: 16px; height: 16px;"></i>
+          <span>{{ t.actions.check_upi }}</span>
+        </button>
+        <button type="button" id="clearUpiBtn" class="btn btn-secondary">
+          <i data-lucide="rotate-ccw" style="width: 14px; height: 14px;"></i>
+          <span>{{ t.actions.clear }}</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Dynamic Result Panel -->
+  <div id="upiResultPanel" class="analysis-result-panel"></div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/upi_guard.js') }}"></script>
+{% endblock %}

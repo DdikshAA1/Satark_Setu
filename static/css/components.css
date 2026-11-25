@@ -1,0 +1,547 @@
+/* ==========================================================================
+   SATARK SETU - HUMAN-CRAFTED COMPONENTS & SPECIFIC MODULE STYLES
+   - Hero Section & Structural Product Journey
+   - Two-Column UPI Send vs. Receive Golden Rule
+   - Scam Detector Result Panel (VirusTotal / Stripe Radar style)
+   - Next Best Action Engine (Structured Action Plan)
+   - Emergency Response Incident Cards & Golden Hour Timeline
+   - Streamlined Dashboard & Real Telemetry Table
+   ========================================================================== */
+
+/* Hero Section */
+.hero-section {
+  padding: 40px 0 28px;
+  text-align: left;
+}
+
+.hero-layout {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 36px;
+  align-items: center;
+}
+
+.hero-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--brand-teal-light);
+  color: var(--brand-teal);
+  border: 1px solid var(--status-safe-border);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-xs);
+  margin-bottom: 16px;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--brand-navy);
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin-bottom: 14px;
+}
+
+.hero-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin-bottom: 24px;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Quick Check Card on Hero */
+.hero-tool-card {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 22px;
+  box-shadow: var(--shadow-card);
+}
+
+.hero-tool-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.hero-tool-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--brand-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Sample Bar Pills */
+.sample-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.sample-pill {
+  border: 1px solid var(--border-subtle);
+  background-color: var(--surface-alt);
+  color: var(--text-primary);
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 4px 9px;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  font-family: var(--font-sans);
+}
+
+.sample-pill:hover {
+  background-color: #E2E8E5;
+  border-color: var(--border-strong);
+  color: var(--brand-navy);
+}
+
+/* STRUCTURAL PRODUCT JOURNEY (NOT a generic card grid) */
+.journey-container {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  margin: 36px 0;
+  box-shadow: var(--shadow-subtle);
+}
+
+.journey-header {
+  margin-bottom: 20px;
+}
+
+.journey-flow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  position: relative;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background-color: #FAFAF7;
+}
+
+.journey-step {
+  padding: 20px 18px;
+  border-right: 1px solid var(--border-subtle);
+  position: relative;
+}
+
+.journey-step:last-child {
+  border-right: none;
+}
+
+.journey-step-num {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--brand-teal);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.journey-step h4 {
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: var(--brand-navy);
+}
+
+.journey-step p {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+/* UPI SEND vs RECEIVE CARDINAL RULE BANNER */
+.upi-rule-card {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 22px;
+  margin: 28px 0;
+  box-shadow: var(--shadow-subtle);
+}
+
+.upi-rule-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.upi-rule-box {
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+}
+
+.upi-rule-send {
+  background-color: #F8F9FA;
+  border-color: #DDE2DF;
+}
+
+.upi-rule-receive {
+  background-color: #FDF4F4;
+  border-color: #F3C3C3;
+}
+
+.upi-rule-box h5 {
+  font-size: 13.5px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.upi-rule-box p {
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+/* ANALYSIS RESULT PANEL (VirusTotal / Security Tool Style) */
+.analysis-result-panel {
+  margin-top: 24px;
+  display: none;
+}
+
+.analysis-result-panel.visible {
+  display: block;
+  animation: simpleFade 0.2s ease;
+}
+
+@keyframes simpleFade {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.result-verdict-box {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 22px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.result-verdict-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+}
+
+.score-meter-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.score-display-num {
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.score-low { color: var(--status-safe); }
+.score-medium { color: var(--status-caution); }
+.score-high { color: #B93838; }
+
+.score-bar-bg {
+  width: 120px;
+  height: 6px;
+  background-color: var(--surface-alt);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+}
+
+.score-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-xs);
+}
+
+.fill-low { background-color: var(--status-safe); }
+.fill-medium { background-color: var(--status-caution); }
+.fill-high { background-color: #B93838; }
+
+/* Indicator Tags */
+.indicators-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.indicator-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: var(--radius-xs);
+}
+
+.indicator-tag.warning {
+  background-color: var(--status-danger-bg);
+  color: #B93838;
+  border: 1px solid var(--status-danger-border);
+}
+
+.indicator-tag.safe {
+  background-color: var(--status-safe-bg);
+  color: var(--status-safe);
+  border: 1px solid var(--status-safe-border);
+}
+
+/* NEXT BEST ACTION ENGINE (Structured Guidance Blueprint) */
+.nba-plan-card {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.nba-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.nba-badge-usp {
+  background-color: var(--brand-teal-light);
+  color: var(--brand-teal);
+  border: 1px solid var(--status-safe-border);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: var(--radius-xs);
+}
+
+.nba-grid-2x2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.nba-quadrant {
+  background-color: var(--surface-alt);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  border: 1px solid var(--border-subtle);
+}
+
+.quadrant-why { border-top: 3px solid var(--brand-navy); }
+.quadrant-avoid { border-top: 3px solid #D96B6B; }
+.quadrant-immediate { border-top: 3px solid var(--brand-teal); }
+.quadrant-recovery { border-top: 3px solid var(--status-caution); }
+
+.quadrant-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.quadrant-header h5 {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--brand-navy);
+}
+
+.nba-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 0;
+}
+
+.nba-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text-primary);
+}
+
+.nba-list li svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* Incident Selector 3x2 Grid */
+.incident-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.incident-btn-card {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  transition: all 0.12s ease;
+  text-align: left;
+}
+
+.incident-btn-card:hover {
+  border-color: var(--border-strong);
+  background-color: var(--surface-alt);
+}
+
+.incident-btn-card.selected {
+  border-color: #B93838;
+  background-color: var(--status-danger-bg);
+  box-shadow: 0 0 0 1px #B93838;
+}
+
+.incident-icon-wrapper {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-xs);
+  background-color: var(--status-danger-bg);
+  color: #B93838;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Timeline Steps */
+.timeline-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.timeline-step-item {
+  display: flex;
+  gap: 14px;
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+}
+
+.step-index-circle {
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  border-radius: var(--radius-xs);
+  background-color: var(--brand-navy);
+  color: #FFFFFF;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+/* Bank Directory Table */
+.bank-directory-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.bank-directory-table th {
+  text-align: left;
+  padding: 8px 12px;
+  background-color: var(--surface-alt);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.bank-directory-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.bank-directory-table tr:hover td {
+  background-color: var(--surface-alt);
+}
+
+/* Responsive Overrides */
+@media (max-width: 900px) {
+  .hero-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .journey-flow {
+    grid-template-columns: 1fr 1fr;
+  }
+  .journey-step:nth-child(2) {
+    border-right: none;
+  }
+  .journey-step:nth-child(1), .journey-step:nth-child(2) {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .nba-grid-2x2 {
+    grid-template-columns: 1fr;
+  }
+  .upi-rule-grid {
+    grid-template-columns: 1fr;
+  }
+  .incident-selector-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .journey-flow {
+    grid-template-columns: 1fr;
+  }
+  .journey-step {
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .journey-step:last-child {
+    border-bottom: none;
+  }
+  .incident-selector-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero-title {
+    font-size: 2rem;
+  }
+}

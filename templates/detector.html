@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container container-narrow">
+
+  <div style="margin-bottom: 22px;">
+    <span class="section-tag">MODULE 01 • SCAM DETECTOR</span>
+    <h2 style="font-size: 1.75rem; margin-bottom: 6px;">
+      {{ 'संदेश सुरक्षा विश्लेषक' if current_lang == 'hi' else 'Smart Scam Detector' }}
+    </h2>
+    <p style="font-size: 14px; margin: 0;">
+      {{ 'संदिग्ध एसएमएस, व्हाट्सएप संदेश, बिजली बिल की चेतावनी या बैंक अलर्ट को नीचे पेस्ट करके चेतावनी संकेत जांचें।' if current_lang == 'hi' else 'Analyze SMS, WhatsApp messages, bank alerts, or payment notices for deceptive indicators.' }}
+    </p>
+  </div>
+
+  <div class="surface-card">
+    <div style="margin-bottom: 12px;">
+      <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); display: block; margin-bottom: 6px;">
+        {{ 'त्वरित परीक्षण उदाहरण:' if current_lang == 'hi' else 'Load a test scenario:' }}
+      </span>
+      <div class="sample-bar">
+        <button type="button" class="sample-pill" data-sender="+91 9876543210" data-sample="Your bank account will be blocked today. Update your KYC immediately using this link: http://sbi-kyc-verify.top">
+          ⚠️ {{ 'केवाईसी ब्लॉक (+91)' if current_lang == 'hi' else 'Fake KYC (Mobile Number)' }}
+        </button>
+        <button type="button" class="sample-pill" data-sender="+91 8877665544" data-sample="Congratulations! You won a lottery. Pay a processing fee to receive your prize.">
+          🎁 {{ 'लॉटरी फीस' if current_lang == 'hi' else 'Lottery Advance Fee' }}
+        </button>
+        <button type="button" class="sample-pill" data-sender="PAYTMB" data-sample="Enter your UPI PIN to receive your cashback.">
+          💸 {{ 'पैसे पाने का पिन' if current_lang == 'hi' else 'PIN to Receive' }}
+        </button>
+        <button type="button" class="sample-pill" data-sender="+91 9988776655" data-sample="Dear consumer, your electricity power will be disconnected tonight at 9.30 pm from electricity office because your previous month bill was not updated. Please call officer at 9876543210.">
+          ⚡ {{ 'बिजली काटना' if current_lang == 'hi' else 'Power Cut Threat' }}
+        </button>
+        <button type="button" class="sample-pill" data-sender="+91 9123456789" data-sample="Cyber Crime Branch: A digital arrest warrant has been issued in your name for illegal parcel. Connect on WhatsApp video call immediately.">
+          🚨 {{ 'डिजिटल अरेस्ट' if current_lang == 'hi' else 'Digital Arrest Call' }}
+        </button>
+        <button type="button" class="sample-pill" data-sender="AD-HDFCBK" data-sample="Your A/C XX4589 is debited for INR 1,500.00 on 24-Nov-26 by UPI/334455667788/Swiggy. Available Bal: INR 35,420.50. - HDFC Bank">
+          ✅ {{ 'वैध बैंक अलर्ट (TRAI DLT)' if current_lang == 'hi' else 'Verified Bank (TRAI DLT)' }}
+        </button>
+      </div>
+    </div>
+
+    <form id="scamDetectorForm">
+      <div style="margin-bottom: 14px;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;">
+          <label class="form-label" for="senderInput" style="margin: 0;">
+            <i data-lucide="phone-call" style="width: 14px; height: 14px; vertical-align: -2px;"></i>
+            <span>{{ 'एसएमएस प्रेषक आईडी / मोबाइल नंबर (वैकल्पिक)' if current_lang == 'hi' else 'SMS Sender ID / Header (Optional)' }}</span>
+          </label>
+          <span style="font-size: 11px; color: var(--text-muted);">{{ 'ट्राई (TRAI) DLT सत्यापन' if current_lang == 'hi' else 'TRAI DLT Verification' }}</span>
+        </div>
+        <input type="text" id="senderInput" class="form-control" placeholder="{{ 'उदा: AD-HDFCBK, VK-SBIINB या व्यक्तिगत नंबर जैसे +91 9876543210' if current_lang == 'hi' else 'e.g. AD-HDFCBK, VK-SBIINB, or personal number +91 9876543210' }}" style="font-family: monospace; font-size: 13.5px;">
+        <span style="font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px;">
+          {{ 'भारतीय बैंक केवल 6-अक्षरों के TRAI हेडर (जैसे AD-HDFCBK) से संदेश भेजते हैं; कभी भी 10-अंकों के मोबाइल नंबर से नहीं।' if current_lang == 'hi' else 'Banks legally send SMS from registered 6-char TRAI headers (e.g. AD-HDFCBK); never from 10-digit mobile numbers.' }}
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="messageInput">
+          <i data-lucide="message-square" style="width: 14px; height: 14px; vertical-align: -2px;"></i>
+          <span>{{ 'संदेश यहाँ दर्ज करें' if current_lang == 'hi' else 'Enter Message Text' }}</span>
+        </label>
+        <textarea id="messageInput" class="form-control" rows="4" placeholder="{{ 'संदेश यहाँ पेस्ट करें (जैसे: बैंक खाता बंद होने का डर, लॉटरी या इनाम का लालच)...' if current_lang == 'hi' else 'Paste text here (e.g. account suspension notice, lottery winner claim, or urgent KYC request)...' }}"></textarea>
+      </div>
+      
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+        <div style="display: flex; gap: 8px;">
+          <button type="submit" id="analyzeBtn" class="btn btn-primary btn-lg">
+            <i data-lucide="shield-search" style="width: 16px; height: 16px;"></i>
+            <span>{{ t.actions.analyse_message }}</span>
+          </button>
+          <button type="button" id="clearBtn" class="btn btn-secondary">
+            <i data-lucide="rotate-ccw" style="width: 14px; height: 14px;"></i>
+            <span>{{ t.actions.clear }}</span>
+          </button>
+        </div>
+        <span style="font-size: 11.5px; color: var(--text-muted); display: flex; align-items: center; gap: 4px;">
+          <i data-lucide="lock" style="width: 12px; height: 12px;"></i>
+          <span>{{ 'गोपनीय: फोन नंबर और खाते स्वतः मास्क किए जाते हैं।' if current_lang == 'hi' else 'Privacy Guarantee: Personal numbers and accounts are redacted.' }}</span>
+        </span>
+      </div>
+    </form>
+  </div>
+
+  <!-- Dynamic Result Panel -->
+  <div id="analysisResultPanel" class="analysis-result-panel"></div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/detector.js') }}"></script>
+{% endblock %}

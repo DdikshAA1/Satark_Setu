@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container container-narrow">
+
+  <div style="margin-bottom: 22px;">
+    <span class="section-tag">MODULE 03 • URL SCANNER</span>
+    <h2 style="font-size: 1.75rem; margin-bottom: 6px;">
+      {{ 'वेबसाइट लिंक सुरक्षा स्कैनर' if current_lang == 'hi' else 'URL Safety Scanner' }}
+    </h2>
+    <p style="font-size: 14px; margin: 0;">
+      {{ 'बिना वेबसाइट खोले या क्लिक किए, उसके डोमेन नाम और संरचना की सुरक्षा जांच करें।' if current_lang == 'hi' else 'Inspect suspicious links and domains structurally without opening or executing them.' }}
+    </p>
+  </div>
+
+  <div class="surface-card">
+    <div style="margin-bottom: 12px;">
+      <span style="font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); display: block; margin-bottom: 6px;">
+        {{ 'सामान्य फर्जी लिंक उदाहरण:' if current_lang == 'hi' else 'Load a phishing URL scenario:' }}
+      </span>
+      <div class="sample-bar">
+        <button type="button" class="sample-pill sample-url-pill" data-url="http://sbi-kyc-verify.top/login.php">
+          🏦 {{ 'फर्जी एसबीआई (.top)' if current_lang == 'hi' else 'Typosquatting (sbi-kyc.top)' }}
+        </button>
+        <button type="button" class="sample-pill sample-url-pill" data-url="http://192.168.1.105/paytm-rewards.apk">
+          📱 {{ 'सीधा आईपी + एपीके' if current_lang == 'hi' else 'Bare IP Host + APK' }}
+        </button>
+        <button type="button" class="sample-pill sample-url-pill" data-url="http://hdfcbank-security-update.xyz">
+          ⚠️ {{ 'सस्ता डोमेन (.xyz)' if current_lang == 'hi' else 'Suspicious TLD (.xyz)' }}
+        </button>
+        <button type="button" class="sample-pill sample-url-pill" data-url="https://www.onlinesbi.sbi/portal/personal.html">
+          ✅ {{ 'असली बैंक डोमेन' if current_lang == 'hi' else 'Legitimate Bank (.sbi)' }}
+        </button>
+      </div>
+    </div>
+
+    <form id="urlScannerForm">
+      <div class="form-group">
+        <label class="form-label" for="urlInput">
+          <i data-lucide="link" style="width: 14px; height: 14px; vertical-align: -2px;"></i>
+          <span>{{ 'वेबसाइट लिंक दर्ज करें' if current_lang == 'hi' else 'Enter Suspicious URL' }}</span>
+        </label>
+        <input type="text" id="urlInput" class="form-control" placeholder="e.g. http://sbi-kyc-verify.top or http://192.168.1.1/claim">
+      </div>
+
+      <div style="display: flex; gap: 8px;">
+        <button type="submit" id="scanUrlBtn" class="btn btn-primary btn-lg">
+          <i data-lucide="scan" style="width: 16px; height: 16px;"></i>
+          <span>{{ t.actions.scan_url }}</span>
+        </button>
+        <button type="button" id="clearUrlBtn" class="btn btn-secondary">
+          <i data-lucide="rotate-ccw" style="width: 14px; height: 14px;"></i>
+          <span>{{ t.actions.clear }}</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Dynamic Result Panel -->
+  <div id="urlResultPanel" class="analysis-result-panel"></div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/url_scanner.js') }}"></script>
+{% endblock %}

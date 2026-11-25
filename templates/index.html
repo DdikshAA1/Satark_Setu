@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+
+  <!-- Hero Section with Integrated Quick Check Tool -->
+  <section class="hero-section">
+    <div class="hero-layout">
+      <!-- Left Column: Vision & CTA -->
+      <div>
+        <div class="hero-badge-pill">
+          <i data-lucide="shield-check" style="width: 13px; height: 13px;"></i>
+          <span>{{ 'डिजिटल वित्तीय समावेशन एवं सुरक्षा' if current_lang == 'hi' else 'Digital Financial Inclusion & Fraud Prevention' }}</span>
+        </div>
+        <h1 class="hero-title">{{ 'विश्वास करने से पहले, एक बार सोचें।' if current_lang == 'hi' else 'Think Before You Trust.' }}</h1>
+        <p class="hero-subtitle">
+          {{ 'भारत के नागरिकों, वरिष्ठ नागरिकों और छोटे व्यापारियों के लिए डिजिटल भुगतान सुरक्षा मंच। संदिग्ध संदेशों को पहचानें, चेतावनी के संकेत समझें और सही कदम उठाएं।' if current_lang == 'hi' else 'A practical digital safety companion for India. Verify suspicious bank alerts, prevent deceptive UPI collect traps, and get calm, step-by-step guidance.' }}
+        </p>
+
+        <div class="hero-actions">
+          <a href="{{ url_for('views.detector_view', lang=current_lang) }}" class="btn btn-primary btn-lg">
+            <i data-lucide="shield-search" style="width: 17px; height: 17px;"></i>
+            <span>{{ 'संदेश की जांच करें' if current_lang == 'hi' else 'Check a Suspicious Message' }}</span>
+          </a>
+          <a href="{{ url_for('views.upi_guard_view', lang=current_lang) }}" class="btn btn-secondary btn-lg">
+            <i data-lucide="smartphone" style="width: 17px; height: 17px;"></i>
+            <span>{{ 'यूपीआई सुरक्षा जांच' if current_lang == 'hi' else 'Verify UPI Request' }}</span>
+          </a>
+          <a href="{{ url_for('views.emergency_view', lang=current_lang) }}" class="btn btn-danger btn-lg">
+            <i data-lucide="phone-call" style="width: 16px; height: 16px;"></i>
+            <span>{{ 'आपातकालीन सहायता (1930)' if current_lang == 'hi' else 'Emergency Triage (1930)' }}</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive Quick-Check Utility Box -->
+      <div class="hero-tool-card">
+        <div class="hero-tool-header">
+          <span class="hero-tool-title">
+            <i data-lucide="search" style="width: 14px; height: 14px; color: var(--brand-teal);"></i>
+            <span>{{ 'त्वरित संदेश स्कैनर' if current_lang == 'hi' else 'Instant Message Scanner' }}</span>
+          </span>
+          <span style="font-size: 11px; color: var(--text-muted);">{{ 'लाइव विश्लेषण' if current_lang == 'hi' else 'Live Heuristic Scan' }}</span>
+        </div>
+
+        <!-- Sample test buttons -->
+        <span style="font-size: 11.5px; color: var(--text-secondary); display: block; margin-bottom: 6px;">
+          {{ 'त्वरित उदाहरण चुनें:' if current_lang == 'hi' else 'Load a common scenario:' }}
+        </span>
+        <div class="sample-bar">
+          <button type="button" class="sample-pill" data-sender="+91 9876543210" data-sample="Your bank account will be blocked today. Update your KYC immediately using this link: http://sbi-kyc-verify.top">
+            ⚠️ {{ 'केवाईसी (+91 नंबर)' if current_lang == 'hi' else 'KYC (+91 Sender)' }}
+          </button>
+          <button type="button" class="sample-pill" data-sender="PAYTMB" data-sample="Enter your UPI PIN to receive your cashback of Rs 2,500.">
+            💸 {{ 'पैसे पाने का पिन' if current_lang == 'hi' else 'PIN to Receive' }}
+          </button>
+          <button type="button" class="sample-pill" data-sender="+91 8877665544" data-sample="Congratulations! You won a lottery. Pay a processing fee to receive your prize.">
+            🎁 {{ 'लॉटरी फीस' if current_lang == 'hi' else 'Lottery Fee' }}
+          </button>
+          <button type="button" class="sample-pill" data-sender="AD-HDFCBK" data-sample="Your A/C XX4589 is debited for INR 1,500.00 on 24-Nov-26 by UPI/334455667788/Swiggy. Available Bal: INR 35,420.50. - HDFC Bank">
+            ✅ {{ 'वैध बैंक (TRAI DLT)' if current_lang == 'hi' else 'Legit (TRAI DLT)' }}
+          </button>
+        </div>
+
+        <form id="scamDetectorForm" style="margin-top: 10px;">
+          <div class="form-group" style="margin-bottom: 8px;">
+            <input type="text" id="senderInput" class="form-control form-control-sm" placeholder="{{ 'एसएमएस प्रेषक (वैकल्पिक, उदा: AD-HDFCBK या +91...)' if current_lang == 'hi' else 'Sender ID / No (e.g. AD-HDFCBK or +91 9876543210)...' }}" style="font-family: monospace; font-size: 12px; margin-bottom: 6px;">
+            <textarea id="messageInput" class="form-control" rows="3" placeholder="{{ 'संदिग्ध एसएमएस या बैंक संदेश यहाँ पेस्ट करें...' if current_lang == 'hi' else 'Paste suspicious SMS, WhatsApp message, or bank notice here...' }}"></textarea>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button type="submit" id="analyzeBtn" class="btn btn-primary" style="flex: 1;">
+              <i data-lucide="shield-search" style="width: 15px; height: 15px;"></i>
+              <span>{{ t.actions.analyse_message }}</span>
+            </button>
+            <button type="button" id="clearBtn" class="btn btn-secondary">
+              <i data-lucide="rotate-ccw" style="width: 13px; height: 13px;"></i>
+              <span>{{ t.actions.clear }}</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Live Analysis Result Panel (Anchored directly under hero) -->
+    <div id="analysisResultPanel" class="analysis-result-panel"></div>
+  </section>
+
+  <!-- THE FOUNDATIONAL UPI RULE: Two-Column Practical Contrast -->
+  <div class="upi-rule-card">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+      <div>
+        <span class="section-tag">{{ 'मूल सुरक्षा नियम' if current_lang == 'hi' else 'FOUNDATIONAL SAFETY RULE' }}</span>
+        <h3 style="margin: 0; font-size: 1.25rem;">
+          {{ 'यूपीआई पिन का स्वर्णिम नियम' if current_lang == 'hi' else 'How UPI PIN Actually Works' }}
+        </h3>
+      </div>
+      <a href="{{ url_for('views.upi_guard_view', lang=current_lang) }}" class="btn btn-secondary btn-sm">
+        <span>{{ 'यूपीआई सुरक्षा कवच खोलें' if current_lang == 'hi' else 'Open UPI Fraud Guard' }} &rarr;</span>
+      </a>
+    </div>
+
+    <div class="upi-rule-grid">
+      <div class="upi-rule-box upi-rule-send">
+        <h5>
+          <i data-lucide="arrow-up-right" style="width: 16px; height: 16px; color: var(--brand-navy);"></i>
+          <span>{{ '1. जब आप पैसे भेजते हैं (पैसे कटते हैं)' if current_lang == 'hi' else '1. When You SEND Money (Debit)' }}</span>
+        </h5>
+        <p style="color: var(--text-secondary); margin: 0;">
+          {{ 'दुकान पर सामान खरीदते समय या किसी को पैसे भेजते समय यूपीआई पिन दर्ज करना आवश्यक होता है।' if current_lang == 'hi' else 'You only enter your UPI PIN when authorizing money to leave your bank account (e.g. at a grocery store checkout).' }}
+        </p>
+      </div>
+
+      <div class="upi-rule-box upi-rule-receive">
+        <h5>
+          <i data-lucide="ban" style="width: 16px; height: 16px; color: #B93838;"></i>
+          <span style="color: #902626;">{{ '2. जब आप पैसे प्राप्त करते हैं (पैसे आते हैं)' if current_lang == 'hi' else '2. When You RECEIVE Money (Credit)' }}</span>
+        </h5>
+        <p style="color: #7A2828; margin: 0; font-weight: 500;">
+          {{ 'पैसे प्राप्त करने या कैशबैक लेने के लिए कभी भी पिन दर्ज नहीं करना पड़ता! यदि कोई पिन डालने को कहे, तो वह 100% धोखा है।' if current_lang == 'hi' else 'You NEVER enter your UPI PIN to receive money, refunds, or cashbacks. Funds are deposited automatically.' }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STRUCTURAL PRODUCT JOURNEY (Linear / Stripe inspired workflow) -->
+  <div class="journey-container">
+    <div class="journey-header">
+      <span class="section-tag">{{ 'सुरक्षा प्रक्रिया' if current_lang == 'hi' else 'HOW SATARK SETU WORKS' }}</span>
+      <h3 style="margin: 0; font-size: 1.3rem;">
+        {{ 'धोखाधड़ी से सुरक्षा की 4-चरणीय यात्रा' if current_lang == 'hi' else 'The 4-Stage Fraud Prevention Journey' }}
+      </h3>
+      <p style="font-size: 13.5px; margin-top: 4px;">
+        {{ 'केवल स्कोर दिखाने के बजाय, हम कारण समझाते हैं और स्पष्ट मार्गदर्शन प्रदान करते हैं।' if current_lang == 'hi' else 'Moving beyond basic warning badges into explainable next steps.' }}
+      </p>
+    </div>
+
+    <div class="journey-flow">
+      <div class="journey-step">
+        <div class="journey-step-num">
+          <i data-lucide="search" style="width: 13px; height: 13px;"></i>
+          <span>01. DETECT</span>
+        </div>
+        <h4>{{ 'खतरा पहचानें' if current_lang == 'hi' else 'Detect Threat' }}</h4>
+        <p>{{ 'संदिग्ध केवाईसी अल्टीमेटम, बिजली बिल धमकी, फर्जी कैशबैक और यूपीआई कलेक्ट अनुरोधों की तत्काल जांच।' if current_lang == 'hi' else 'Heuristic rules and NLP model parse SMS, payment notes, and domain URLs for deceptive tactics.' }}</p>
+      </div>
+
+      <div class="journey-step">
+        <div class="journey-step-num">
+          <i data-lucide="help-circle" style="width: 13px; height: 13px;"></i>
+          <span>02. UNDERSTAND</span>
+        </div>
+        <h4>{{ 'कारण समझें' if current_lang == 'hi' else 'Understand Why' }}</h4>
+        <p>{{ 'सरल हिंदी या अंग्रेजी में स्पष्ट विवरण कि संदेश में कौन सा मनोवैज्ञानिक दबाव या धोखा इस्तेमाल हुआ है।' if current_lang == 'hi' else 'Demystifies cyber tactics in plain words without intimidating technical jargon.' }}</p>
+      </div>
+
+      <div class="journey-step">
+        <div class="journey-step-num">
+          <i data-lucide="shield" style="width: 13px; height: 13px;"></i>
+          <span>03. PREVENT</span>
+        </div>
+        <h4>{{ 'धोखा रोकें' if current_lang == 'hi' else 'Prevent Action' }}</h4>
+        <p>{{ 'क्या कतई नहीं करना है: लिंक न खोलना, रिमोट ऐप डाउनलोड न करना, और असली बैंक ऐप से पुष्टि करना।' if current_lang == 'hi' else 'Next Best Action Engine provides concrete defensive rules: what not to click and what not to share.' }}</p>
+      </div>
+
+      <div class="journey-step">
+        <div class="journey-step-num">
+          <i data-lucide="phone-call" style="width: 13px; height: 13px;"></i>
+          <span>04. RESPOND</span>
+        </div>
+        <h4>{{ 'तुरंत समाधान' if current_lang == 'hi' else 'Rapid Response' }}</h4>
+        <p>{{ 'पैसे कटने पर गोल्डन ऑवर में राष्ट्रीय साइबर हेल्पलाइन 1930 पर कॉल, बैंक कार्ड ब्लॉक और रिपोर्टिंग।' if current_lang == 'hi' else 'Immediate incident containment protocols, 1930 Cyber helpline connection, and evidence logging.' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PURPOSE-BUILT PERSONA GUIDANCE (Varied, informative cards) -->
+  <div style="margin: 36px 0;">
+    <div style="margin-bottom: 20px;">
+      <span class="section-tag">{{ 'लक्षित नागरिक वर्ग' if current_lang == 'hi' else 'FINANCIAL INCLUSION' }}</span>
+      <h3 style="margin: 0; font-size: 1.3rem;">
+        {{ 'भारतीय उपयोगकर्ताओं के लिए व्यावहारिक समाधान' if current_lang == 'hi' else 'Tailored for Indian Digital Payment Users' }}
+      </h3>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
+      <div class="surface-card">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+          <div style="width: 28px; height: 28px; border-radius: var(--radius-xs); background-color: var(--brand-teal-light); color: var(--brand-teal); display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="user-check" style="width: 15px; height: 15px;"></i>
+          </div>
+          <h4 style="font-size: 14px; margin: 0;">{{ 'वरिष्ठ नागरिक' if current_lang == 'hi' else 'Senior Citizens' }}</h4>
+        </div>
+        <p style="font-size: 13px; line-height: 1.5; margin: 0;">
+          {{ 'फर्जी डिजिटल अरेस्ट कॉल, सीबीआई की धमकी और पेंशन/केवाईसी बंद होने के भय को शांत मन से सुलझाने का सीधा मार्गदर्शन।' if current_lang == 'hi' else 'Calm advice to neutralize digital arrest panic, fake police calls, and unverified pension or KYC suspension alerts.' }}
+        </p>
+      </div>
+
+      <div class="surface-card">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+          <div style="width: 28px; height: 28px; border-radius: var(--radius-xs); background-color: var(--surface-alt); color: var(--brand-navy); display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="store" style="width: 15px; height: 15px;"></i>
+          </div>
+          <h4 style="font-size: 14px; margin: 0;">{{ 'दुकानदार एवं व्यापारी' if current_lang == 'hi' else 'Kirana & Retailers' }}</h4>
+        </div>
+        <p style="font-size: 13px; line-height: 1.5; margin: 0;">
+          {{ 'क्यूआर कोड में हेराफेरी, फर्जी पेमेंट स्क्रीनशॉट और कलेक्ट रिक्वेस्ट के जरिए होने वाले गबन से बचाव।' if current_lang == 'hi' else 'Verification against fraudulent collect requests, fake payment screenshot tricks, and QR swap manipulation.' }}
+        </p>
+      </div>
+
+      <div class="surface-card">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+          <div style="width: 28px; height: 28px; border-radius: var(--radius-xs); background-color: #FEF7EA; color: var(--status-caution); display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="shopping-bag" style="width: 15px; height: 15px;"></i>
+          </div>
+          <h4 style="font-size: 14px; margin: 0;">{{ 'स्ट्रीट वेंडर एवं फेरीवाले' if current_lang == 'hi' else 'Street Vendors' }}</h4>
+        </div>
+        <p style="font-size: 13px; line-height: 1.5; margin: 0;">
+          {{ 'पैसे प्राप्त करने के लिए कभी पिन नहीं डालना होता - इस बुनियादी नियम का आसान भाषा में निरंतर स्मरण।' if current_lang == 'hi' else 'Clear reinforcement of the core rule: daily earnings arrive automatically without entering any security PIN.' }}
+        </p>
+      </div>
+
+      <div class="surface-card">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+          <div style="width: 28px; height: 28px; border-radius: var(--radius-xs); background-color: var(--brand-teal-light); color: var(--brand-teal); display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="smartphone" style="width: 15px; height: 15px;"></i>
+          </div>
+          <h4 style="font-size: 14px; margin: 0;">{{ 'नए डिजिटल उपयोगकर्ता' if current_lang == 'hi' else 'First-Time Users' }}</h4>
+        </div>
+        <p style="font-size: 13px; line-height: 1.5; margin: 0;">
+          {{ 'असली बैंक लेनदेन सूचना और धोखाधड़ी वाले संदेश में अंतर समझने की व्यावहारिक समझ।' if current_lang == 'hi' else 'Distinguishes genuine transactional debit notifications from malicious phishing communications.' }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/detector.js') }}"></script>
+{% endblock %}

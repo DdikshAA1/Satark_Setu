@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container container-narrow">
+
+  <div style="margin-bottom: 24px;">
+    <span class="section-tag">FINTECH & FINANCIAL INCLUSION INITIATIVE</span>
+    <h2 style="font-size: 1.75rem; margin-bottom: 6px;">
+      {{ 'परियोजना परिचय: सतर्क सेतु' if current_lang == 'hi' else 'About Project: Satark Setu' }}
+    </h2>
+    <p style="font-size: 14px; margin: 0;">
+      {{ 'विश्वास करने से पहले, एक बार सोचें • भारत के लिए बुद्धिमान डिजिटल भुगतान सुरक्षा मंच' if current_lang == 'hi' else 'Think Before You Trust • An Intelligent Digital Payment Fraud Prevention & Awareness Platform for India' }}
+    </p>
+  </div>
+
+  <div class="surface-card" style="margin-bottom: 20px;">
+    <h3 style="font-size: 1.15rem; margin-bottom: 10px; color: var(--brand-navy);">
+      {{ 'परियोजना मिशन एवं समस्या विवरण (Problem Statement)' if current_lang == 'hi' else 'Project Mission & Problem Statement' }}
+    </h3>
+    <div style="background-color: var(--surface-alt); border-left: 3px solid var(--brand-teal); padding: 14px; border-radius: var(--radius-xs); margin-bottom: 14px;">
+      <p style="font-style: italic; color: var(--brand-navy); margin: 0; font-size: 14px; font-weight: 500;">
+        "How might technology help individuals and small businesses recognise, prevent and navigate digital payment fraud?"
+      </p>
+    </div>
+    <p style="font-size: 13.5px; line-height: 1.6; color: var(--text-secondary); margin-bottom: 8px;">
+      With the rapid expansion of UPI and digital banking in India, millions of first-time users, senior citizens, shopkeepers, and street vendors are targeted by deceptive tactics: fake KYC suspension deadlines, UPI PIN-to-receive traps, deceptive collect requests, electricity disconnection threats, and digital arrest intimidations.
+    </p>
+    <p style="font-size: 13.5px; line-height: 1.6; color: var(--text-secondary); margin: 0;">
+      Satark Setu bridges this cybersecurity divide through an intuitive companion that moves beyond black-box risk scores into transparent, compassionate, and actionable guidance.
+    </p>
+  </div>
+
+  <div class="surface-card" style="margin-bottom: 20px;">
+    <h3 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--brand-navy);">
+      {{ 'केंद्रीय नवाचार: नेक्स्ट बेस्ट एक्शन इंजन' if current_lang == 'hi' else 'Core Innovation: Next Best Action Engine' }}
+    </h3>
+    <p style="font-size: 13.5px; line-height: 1.6; color: var(--text-secondary); margin-bottom: 14px;">
+      Most conventional scam checkers merely return a percentage or generic red warning, leaving the victim in panic. Satark Setu's Next Best Action Engine decomposes every threat across four structured dimensions:
+    </p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 13px;">
+      <div class="surface-elevated" style="border-left: 3px solid var(--brand-navy);">
+        <strong style="color: var(--brand-navy); display: block; margin-bottom: 3px;">1. Why This is Suspicious</strong>
+        <span style="color: var(--text-secondary);">Plain-language explanation of deceptive psychological tricks without technical jargon.</span>
+      </div>
+      <div class="surface-elevated" style="border-left: 3px solid #D96B6B;">
+        <strong style="color: #902626; display: block; margin-bottom: 3px;">2. What to AVOID Doing</strong>
+        <span style="color: var(--text-secondary);">Concrete traps not to fall for (e.g., entering PIN to receive money, clicking links).</span>
+      </div>
+      <div class="surface-elevated" style="border-left: 3px solid var(--brand-teal);">
+        <strong style="color: var(--brand-teal); display: block; margin-bottom: 3px;">3. Immediate Actions</strong>
+        <span style="color: var(--text-secondary);">Calm, safe steps to verify authentic status via official banking apps or branch visits.</span>
+      </div>
+      <div class="surface-elevated" style="border-left: 3px solid var(--status-caution);">
+        <strong style="color: var(--status-caution); display: block; margin-bottom: 3px;">4. Recovery Protocol</strong>
+        <span style="color: var(--text-secondary);">Golden Hour actions if funds were debited: 1930 Helpline, bank card freeze, cybercrime.gov.in.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tech Stack & Architecture -->
+  <div class="surface-card" style="margin-bottom: 20px;">
+    <h3 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--brand-navy);">
+      {{ 'प्रौद्योगिकी एवं वास्तुकला' if current_lang == 'hi' else 'Technology Stack & Architecture' }}
+    </h3>
+    <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 13px; color: var(--text-secondary); padding: 0; margin: 0;">
+      <li style="display: flex; gap: 8px;">
+        <i data-lucide="check" style="width: 15px; height: 15px; color: var(--brand-teal); margin-top: 3px; flex-shrink: 0;"></i>
+        <span><strong>Frontend:</strong> Semantic HTML5, Human-Designed Fintech CSS (Deep Navy `#142B3A`, Warm White `#FAFAF7`, Teal `#2E8B78`), Lucide Icons, Chart.js.</span>
+      </li>
+      <li style="display: flex; gap: 8px;">
+        <i data-lucide="check" style="width: 15px; height: 15px; color: var(--brand-teal); margin-top: 3px; flex-shrink: 0;"></i>
+        <span><strong>Backend:</strong> Python 3, Flask modular routing architecture, parameter-driven security headers.</span>
+      </li>
+      <li style="display: flex; gap: 8px;">
+        <i data-lucide="check" style="width: 15px; height: 15px; color: var(--brand-teal); margin-top: 3px; flex-shrink: 0;"></i>
+        <span><strong>AI & NLP:</strong> Scikit-Learn TF-IDF Vectorizer + Logistic Regression classifier calibrated on Indian financial fraud corpus, combined with an explainable heuristic rule engine.</span>
+      </li>
+      <li style="display: flex; gap: 8px;">
+        <i data-lucide="check" style="width: 15px; height: 15px; color: var(--brand-teal); margin-top: 3px; flex-shrink: 0;"></i>
+        <span><strong>Database:</strong> SQLite with parameterized queries and strict privacy redaction (automatic masking of OTPs, account numbers, and phone numbers).</span>
+      </li>
+      <li style="display: flex; gap: 8px;">
+        <i data-lucide="check" style="width: 15px; height: 15px; color: var(--brand-teal); margin-top: 3px; flex-shrink: 0;"></i>
+        <span><strong>Bilingual Localization:</strong> Complete English and simple, respectful Hindi for all modules, categories, and guidance plans.</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Compliance & Development Audit Note -->
+  <div class="surface-card" style="border: 1px solid var(--status-caution-border); background-color: var(--status-caution-bg);">
+    <div style="display: flex; align-items: flex-start; gap: 12px;">
+      <i data-lucide="info" style="width: 18px; height: 18px; color: var(--status-caution); flex-shrink: 0; margin-top: 2px;"></i>
+      <div>
+        <h4 style="color: var(--brand-navy); font-size: 13.5px; margin-bottom: 4px;">
+          Development Transparency & Tool Audit
+        </h4>
+        <p style="font-size: 13px; line-height: 1.5; color: var(--text-primary); margin-bottom: 6px;">
+          In strict compliance with development integrity standards and Section 11 of the project specification:
+        </p>
+        <ul style="font-size: 12.5px; line-height: 1.5; color: var(--text-secondary); margin-left: 16px; margin-bottom: 0;">
+          <li>Covexcode was unavailable in the local execution environment during this sprint.</li>
+          <li>Initial architecture, backend development, and testing were conducted using Antigravity.</li>
+          <li>All development activities are transparently logged in <code>COVEXCODE_DEV_LOG.md</code>.</li>
+          <li>The codebase is architecturally prepared, modular, and ready for immediate inspection and refinement once Covexcode is provisioned.</li>
+          <li>No fake Covexcode logs or claims have been fabricated.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

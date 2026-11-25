@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container container-narrow" style="text-align: center; padding: 50px 20px;">
+  <div style="font-size: 3.5rem; font-weight: 800; color: var(--brand-navy); line-height: 1;">404</div>
+  <h2 style="margin: 14px 0 8px; font-size: 1.5rem;">{{ 'पृष्ठ नहीं मिला' if current_lang == 'hi' else 'Page Not Found' }}</h2>
+  <p style="margin-bottom: 20px; color: var(--text-secondary); font-size: 14px;">
+    {{ 'आप जिस पृष्ठ की तलाश कर रहे हैं वह मौजूद नहीं है या हटा दिया गया है।' if current_lang == 'hi' else 'The page you requested does not exist or has been moved.' }}
+  </p>
+  <a href="{{ url_for('views.home', lang=current_lang) }}" class="btn btn-primary">
+    <i data-lucide="home" style="width: 15px; height: 15px;"></i>
+    <span>{{ 'मुख्य पृष्ठ पर वापस जाएं' if current_lang == 'hi' else 'Back to Home' }}</span>
+  </a>
+</div>
+{% endblock %}

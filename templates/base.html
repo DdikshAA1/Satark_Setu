@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ t.brand_name }} | {{ t.tagline }}</title>
+  
+  <!-- Favicon Emblem -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232E8B78' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/><path d='m9 12 2 2 4-4'/></svg>">
+  
+  <!-- Typography: Manrope -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Design System CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+  <!-- Top Emergency Quick Bar -->
+  <aside class="helpline-top-bar" aria-label="National Cyber Crime Emergency Bar">
+    <div class="container">
+      <div class="inner">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span class="helpline-pill">
+            <i data-lucide="shield-alert" style="width: 13px; height: 13px;"></i>
+            <span>{{ 'साइबर आपातकाल' if current_lang == 'hi' else 'CYBER HELPLINE' }}</span>
+          </span>
+          <span>
+            {{ 'धोखाधड़ी में पैसे कटने पर तुरंत कॉल करें:' if current_lang == 'hi' else 'If money was debited by a scammer, call immediately:' }}
+          </span>
+          <a href="tel:1930" class="helpline-call">
+            <i data-lucide="phone" style="width: 12px; height: 12px;"></i>
+            <strong>1930</strong>
+          </a>
+        </div>
+        <div style="font-size: 12px;">
+          <span style="opacity: 0.85;">
+            {{ 'राष्ट्रीय साइबर पोर्टल:' if current_lang == 'hi' else 'Official Portal:' }}
+          </span>
+          <a href="https://cybercrime.gov.in" target="_blank" rel="noopener" style="color: #FFFFFF; font-weight: 600; margin-left: 4px; text-decoration: underline;">cybercrime.gov.in</a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Clean Sticky Navbar -->
+  <header class="site-nav">
+    <div class="container nav-container">
+      <a href="{{ url_for('views.home', lang=current_lang) }}" class="brand-wrapper">
+        <div class="brand-logo-icon">
+          <i data-lucide="shield-check" style="width: 18px; height: 18px;"></i>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">{{ t.brand_name }}</span>
+          <span class="brand-tagline-sub">{{ t.tagline }}</span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav>
+        <ul class="nav-links" id="navLinks">
+          <li>
+            <a href="{{ url_for('views.home', lang=current_lang) }}" class="nav-link {% if active_page == 'home' %}active{% endif %}">
+              <i data-lucide="home" style="width: 15px; height: 15px;"></i>
+              <span>{{ t.nav.home }}</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('views.detector_view', lang=current_lang) }}" class="nav-link {% if active_page == 'detector' %}active{% endif %}">
+              <i data-lucide="message-square-warning" style="width: 15px; height: 15px;"></i>
+              <span>{{ t.nav.scam_detector }}</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('views.upi_guard_view', lang=current_lang) }}" class="nav-link {% if active_page == 'upi_guard' %}active{% endif %}">
+              <i data-lucide="smartphone" style="width: 15px; height: 15px;"></i>
+              <span>{{ t.nav.upi_guard }}</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('views.url_scanner_view', lang=current_lang) }}" class="nav-link {% if active_page == 'url_scanner' %}active{% endif %}">
+              <i data-lucide="globe" style="width: 15px; height: 15px;"></i>
+              <span>{{ t.nav.url_scanner }}</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('views.dashboard_view', lang=current_lang) }}" class="nav-link {% if active_page == 'dashboard' %}active{% endif %}">
+              <i data-lucide="bar-chart-2" style="width: 15px; height: 15px;"></i>
+              <span>{{ t.nav.dashboard }}</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('views.emergency_view', lang=current_lang) }}" class="nav-link emergency-link {% if active_page == 'emergency' %}active{% endif %}">
+              <i data-lucide="phone-call" style="width: 15px; height: 15px;"></i>
+              <span>{{ t.nav.emergency }}</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Language Switcher & Mobile Hamburger -->
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div class="lang-switch" role="group" aria-label="Language Selector">
+          <button type="button" class="lang-btn {% if current_lang != 'hi' %}active{% endif %}" data-lang="en">English</button>
+          <button type="button" class="lang-btn {% if current_lang == 'hi' %}active{% endif %}" data-lang="hi">हिंदी</button>
+        </div>
+
+        <button type="button" class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle Navigation Menu">
+          <i data-lucide="menu" style="width: 18px; height: 18px;"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main View Container -->
+  <main class="main-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Clean Fintech Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+            <div class="brand-logo-icon" style="width: 26px; height: 26px;">
+              <i data-lucide="shield-check" style="width: 15px; height: 15px;"></i>
+            </div>
+            <strong style="color: var(--brand-navy); font-size: 1.05rem;">{{ t.brand_name }}</strong>
+          </div>
+          <p style="font-size: 13px; line-height: 1.55; margin-bottom: 14px;">
+            {{ 'डिजिटल भुगतान का उपयोग करने वाले प्रत्येक भारतीय नागरिक, वरिष्ठ नागरिक और व्यापारी के लिए व्यावहारिक सुरक्षा मंच।' if current_lang == 'hi' else 'A practical digital payment security companion built for Indian consumers, senior citizens, and micro-merchants.' }}
+          </p>
+          <div style="display: inline-flex; align-items: center; gap: 6px; background-color: var(--surface-alt); padding: 5px 10px; border-radius: var(--radius-xs); border: 1px solid var(--border-subtle); font-size: 11.5px; font-weight: 600; color: var(--brand-navy);">
+            <i data-lucide="shield-check" style="width: 14px; height: 14px; color: var(--brand-teal);"></i>
+            <span>{{ 'डिजिटल वित्तीय समावेशन एवं सुरक्षा मंच' if current_lang == 'hi' else 'FinTech & Financial Inclusion Platform' }}</span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h5>{{ 'सुरक्षा टूल्स' if current_lang == 'hi' else 'Tools' }}</h5>
+          <ul class="footer-links">
+            <li><a href="{{ url_for('views.detector_view', lang=current_lang) }}">{{ t.nav.scam_detector }}</a></li>
+            <li><a href="{{ url_for('views.upi_guard_view', lang=current_lang) }}">{{ t.nav.upi_guard }}</a></li>
+            <li><a href="{{ url_for('views.url_scanner_view', lang=current_lang) }}">{{ t.nav.url_scanner }}</a></li>
+            <li><a href="{{ url_for('views.emergency_view', lang=current_lang) }}">{{ t.nav.emergency }}</a></li>
+            <li><a href="{{ url_for('views.dashboard_view', lang=current_lang) }}">{{ t.nav.dashboard }}</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>{{ 'सरकारी सेवाएं' if current_lang == 'hi' else 'National Helplines' }}</h5>
+          <ul class="footer-links">
+            <li><a href="https://cybercrime.gov.in" target="_blank" rel="noopener">National Cyber Crime Portal (1930)</a></li>
+            <li><a href="https://sancharsaathi.gov.in/sfc/" target="_blank" rel="noopener">Chakshu (Spam SMS Reporting)</a></li>
+            <li><a href="https://sachet.rbi.org.in" target="_blank" rel="noopener">RBI Sachet Portal</a></li>
+            <li><a href="https://www.npci.org.in" target="_blank" rel="noopener">NPCI Dispute Redressal</a></li>
+            <li><a href="{{ url_for('views.about_view', lang=current_lang) }}">{{ 'परियोजना परिचय' if current_lang == 'hi' else 'About Satark Setu' }}</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>{{ 'गोपनीयता नीति' if current_lang == 'hi' else 'Data Privacy' }}</h5>
+          <p style="font-size: 12.5px; line-height: 1.5; color: var(--text-muted); margin-bottom: 10px;">
+            {{ 'सतर्क सेतु आपके ओटीपी, पिन या संवेदनशील बैंक खाते को कभी स्टोर नहीं करता। डेटाबेस में सभी जानकारी मास्क की जाती है।' if current_lang == 'hi' else 'Satark Setu never asks for or stores OTPs, passwords, or UPI PINs. Analysis snippets are automatically sanitized.' }}
+          </p>
+          <div style="font-size: 12px; color: #B93838; font-weight: 700;">
+            {{ 'हेल्पलाइन: 1930 (24x7)' if current_lang == 'hi' else 'Cyber Helpline: 1930 (24x7)' }}
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; 2026 {{ t.brand_name }}. {{ 'सर्वाधिकार सुरक्षित।' if current_lang == 'hi' else 'All rights reserved.' }}
+        </div>
+        <div style="font-size: 11.5px; color: var(--text-muted); max-width: 580px;">
+          {{ t.disclaimer }}
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Core App Scripts -->
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  {% block extra_scripts %}{% endblock %}
+
+</body>
+</html>

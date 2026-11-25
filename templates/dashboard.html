@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+
+  <div style="margin-bottom: 22px;">
+    <span class="section-tag">MODULE 07 • DASHBOARD</span>
+    <h2 style="font-size: 1.75rem; margin-bottom: 6px;">
+      {{ 'सुरक्षा एवं गतिविधि डैशबोर्ड' if current_lang == 'hi' else 'Safety & Telemetry Dashboard' }}
+    </h2>
+    <p style="font-size: 14px; margin: 0;">
+      {{ 'वास्तविक डेटाबेस रिकॉर्ड पर आधारित विश्लेषण सारांश और हालिया गतिविधि।' if current_lang == 'hi' else 'Overview of real scan telemetry, threat distribution, and verified incident trends.' }}
+    </p>
+  </div>
+
+  <!-- Metric Counters 4 Cards (Clean Minimal Tiles) -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 24px;">
+    <div class="surface-card" style="padding: 18px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+        <span style="font-size: 11.5px; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">{{ 'कुल विश्लेषण' if current_lang == 'hi' else 'Total Analyses' }}</span>
+        <i data-lucide="activity" style="width: 15px; height: 15px; color: var(--brand-teal);"></i>
+      </div>
+      <div id="statTotalAnalyses" style="font-size: 2rem; font-weight: 800; color: var(--brand-navy); line-height: 1.1;">-</div>
+      <div style="font-size: 11.5px; color: var(--text-secondary); margin-top: 4px;">{{ 'संदेश, यूपीआई व लिंक' if current_lang == 'hi' else 'Messages, UPI & URLs' }}</div>
+    </div>
+
+    <div class="surface-card" style="padding: 18px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+        <span style="font-size: 11.5px; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">{{ 'उच्च जोखिम (High Risk)' if current_lang == 'hi' else 'High Risk' }}</span>
+        <i data-lucide="alert-triangle" style="width: 15px; height: 15px; color: #B93838;"></i>
+      </div>
+      <div id="statHighRisk" style="font-size: 2rem; font-weight: 800; color: #B93838; line-height: 1.1;">-</div>
+      <div style="font-size: 11.5px; color: #902626; margin-top: 4px;">{{ 'गंभीर चेतावनी संकेत' if current_lang == 'hi' else 'Severe threat signals' }}</div>
+    </div>
+
+    <div class="surface-card" style="padding: 18px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+        <span style="font-size: 11.5px; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">{{ 'मध्यम जोखिम (Medium)' if current_lang == 'hi' else 'Medium Risk' }}</span>
+        <i data-lucide="alert-circle" style="width: 15px; height: 15px; color: var(--status-caution);"></i>
+      </div>
+      <div id="statMediumRisk" style="font-size: 2rem; font-weight: 800; color: var(--status-caution); line-height: 1.1;">-</div>
+      <div style="font-size: 11.5px; color: var(--status-caution); margin-top: 4px;">{{ 'सावधानी व सत्यापन योग्य' if current_lang == 'hi' else 'Cautionary / unverified' }}</div>
+    </div>
+
+    <div class="surface-card" style="padding: 18px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+        <span style="font-size: 11.5px; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">{{ 'कम जोखिम (Low Risk)' if current_lang == 'hi' else 'Low Risk' }}</span>
+        <i data-lucide="check-circle" style="width: 15px; height: 15px; color: var(--brand-teal);"></i>
+      </div>
+      <div id="statLowRisk" style="font-size: 2rem; font-weight: 800; color: var(--brand-teal); line-height: 1.1;">-</div>
+      <div style="font-size: 11.5px; color: var(--brand-teal); margin-top: 4px;">{{ 'सामान्य बैंक लेनदेन' if current_lang == 'hi' else 'Standard transactions' }}</div>
+    </div>
+  </div>
+
+  <!-- Chart Visualizations (Clean Minimal Canvas) -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-bottom: 24px;">
+    <!-- Risk Breakdown Doughnut -->
+    <div class="surface-card">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+        <h4 style="font-size: 14px; margin: 0; color: var(--brand-navy);">{{ 'जोखिम स्तर वितरण' if current_lang == 'hi' else 'Risk Classification Distribution' }}</h4>
+        <span style="font-size: 10.5px; color: var(--text-muted); font-weight: 600;">Chart.js</span>
+      </div>
+      <div style="position: relative; height: 230px;">
+        <canvas id="riskBreakdownChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Top Categories Bar Chart -->
+    <div class="surface-card">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+        <h4 style="font-size: 14px; margin: 0; color: var(--brand-navy);">{{ 'सर्वाधिक पाए गए धोखाधड़ी के पैटर्न' if current_lang == 'hi' else 'Prevalent Fraud Patterns' }}</h4>
+        <span style="font-size: 10.5px; color: var(--text-muted); font-weight: 600;">Chart.js</span>
+      </div>
+      <div style="position: relative; height: 230px;">
+        <canvas id="topCategoriesChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Real Telemetry History Table (Privacy Redacted) -->
+  <div class="surface-card" style="margin-bottom: 24px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;">
+      <div>
+        <h4 style="margin: 0; font-size: 14px; color: var(--brand-navy);">{{ 'हालिया स्कैन इतिहास (वास्तविक डेटाबेस)' if current_lang == 'hi' else 'Recent Scan Telemetry (Actual SQLite Records)' }}</h4>
+        <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
+          {{ 'गोपनीयता सुरक्षा: फोन नंबर, बैंक खाते और संवेदनशील विवरण स्वतः हटा दिए जाते हैं।' if current_lang == 'hi' else 'Privacy Guarantee: Personal numbers, OTPs, and card numbers are masked prior to storage.' }}
+        </p>
+      </div>
+    </div>
+
+    <div style="overflow-x: auto;">
+      <table class="bank-directory-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Content Snippet (Masked)</th>
+            <th>Assessment</th>
+            <th>Logged At</th>
+          </tr>
+        </thead>
+        <tbody id="recentHistoryTableBody">
+          <tr>
+            <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">
+              {{ 'इतिहास लोड हो रहा है...' if current_lang == 'hi' else 'Loading telemetry data...' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Quick Safety Guidance Shortcuts -->
+  <div class="surface-card">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;">
+      <h4 style="margin: 0; font-size: 14px; color: var(--brand-navy); display: flex; align-items: center; gap: 6px;">
+        <i data-lucide="shield-check" style="width: 16px; height: 16px; color: var(--brand-teal);"></i>
+        <span>{{ 'आवश्यक सुरक्षा नियम एवं शॉर्टकट' if current_lang == 'hi' else 'Essential Cybersecurity Rules & Shortcuts' }}</span>
+      </h4>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px;">
+      <div class="surface-elevated">
+        <strong style="color: var(--brand-navy); font-size: 13px; display: block; margin-bottom: 4px;">
+          {{ '1. यूपीआई पिन केवल पैसे भेजने के लिए' if current_lang == 'hi' else '1. UPI PIN Exclusively for Sending' }}
+        </strong>
+        <p style="font-size: 12.5px; line-height: 1.45; color: var(--text-secondary); margin: 0;">
+          {{ 'पैसे प्राप्त करने, रिफंड लेने या कैशबैक के लिए कभी भी पिन दर्ज न करें।' if current_lang == 'hi' else 'Never enter your UPI PIN to claim cashbacks, refunds, or customer support payments.' }}
+        </p>
+      </div>
+
+      <div class="surface-elevated">
+        <strong style="color: var(--brand-navy); font-size: 13px; display: block; margin-bottom: 4px;">
+          {{ '2. डिजिटल अरेस्ट जैसा कोई कानून नहीं' if current_lang == 'hi' else '2. No Such Law as Digital Arrest' }}
+        </strong>
+        <p style="font-size: 12.5px; line-height: 1.45; color: var(--text-secondary); margin: 0;">
+          {{ 'असली पुलिस कभी वीडियो कॉल पर अरेस्ट वारंट नहीं भेजती और न ही सत्यापन के नाम पर पैसे मांगती है।' if current_lang == 'hi' else 'Real law enforcement officers never issue Skype arrest warrants or demand security deposits.' }}
+        </p>
+      </div>
+
+      <div class="surface-elevated">
+        <strong style="color: var(--brand-navy); font-size: 13px; display: block; margin-bottom: 4px;">
+          {{ '3. रिमोट ऐप डाउनलोड न करें' if current_lang == 'hi' else '3. Never Install Remote Screen Apps' }}
+        </strong>
+        <p style="font-size: 12.5px; line-height: 1.45; color: var(--text-secondary); margin: 0;">
+          {{ 'बिजली बिल या बैंक सहायता के नाम पर AnyDesk या TeamViewer जैसा कोई ऐप न लगाएं।' if current_lang == 'hi' else 'Reject calls requesting installation of AnyDesk or TeamViewer to verify utility connections.' }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

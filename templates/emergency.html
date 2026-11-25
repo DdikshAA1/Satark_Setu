@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container container-narrow">
+
+  <div style="margin-bottom: 22px;">
+    <span class="section-tag" style="color: #B93838;">MODULE 05 • EMERGENCY ASSISTANT</span>
+    <h2 style="font-size: 1.75rem; margin-bottom: 6px;">
+      {{ 'आपातकालीन धोखाधड़ी राहत मंच' if current_lang == 'hi' else 'Emergency Fraud Response Assistant' }}
+    </h2>
+    <p style="font-size: 14px; margin: 0;">
+      {{ 'यदि आप धोखाधड़ी के शिकार हो गए हैं या गलती से कोई जानकारी साझा हो गई है, तो नीचे अपनी स्थिति चुनें:' if current_lang == 'hi' else 'If you have interacted with a scam or suffered financial loss, select your situation below for instant containment steps:' }}
+    </p>
+  </div>
+
+  <!-- Incident Selector 3x2 Grid -->
+  <div class="incident-selector-grid">
+    <div class="incident-btn-card selected" data-incident="money_lost">
+      <div class="incident-icon-wrapper">
+        <i data-lucide="credit-card" style="width: 16px; height: 16px;"></i>
+      </div>
+      <div>
+        <strong style="display: block; font-size: 13.5px; color: var(--brand-navy); margin-bottom: 2px;">
+          {{ 'पैसे कट गए / ट्रांसफर हुए' if current_lang == 'hi' else 'Money Debited / Lost' }}
+        </strong>
+        <span style="font-size: 11.5px; color: var(--text-secondary);">
+          {{ 'खाते से अनधिकृत पैसे कटे हैं' if current_lang == 'hi' else 'Unauthorized transaction occurred' }}
+        </span>
+      </div>
+    </div>
+
+    <div class="incident-btn-card" data-incident="shared_otp">
+      <div class="incident-icon-wrapper">
+        <i data-lucide="key" style="width: 16px; height: 16px;"></i>
+      </div>
+      <div>
+        <strong style="display: block; font-size: 13.5px; color: var(--brand-navy); margin-bottom: 2px;">
+          {{ 'ओटीपी (OTP) साझा कर दिया' if current_lang == 'hi' else 'Accidentally Shared OTP' }}
+        </strong>
+        <span style="font-size: 11.5px; color: var(--text-secondary);">
+          {{ 'किसी को गुप्त कोड बता दिया' if current_lang == 'hi' else 'Gave verification code to caller' }}
+        </span>
+      </div>
+    </div>
+
+    <div class="incident-btn-card" data-incident="approved_upi">
+      <div class="incident-icon-wrapper">
+        <i data-lucide="smartphone" style="width: 16px; height: 16px;"></i>
+      </div>
+      <div>
+        <strong style="display: block; font-size: 13.5px; color: var(--brand-navy); margin-bottom: 2px;">
+          {{ 'यूपीआई कलेक्ट अप्रूव किया' if current_lang == 'hi' else 'Approved UPI Request' }}
+        </strong>
+        <span style="font-size: 11.5px; color: var(--text-secondary);">
+          {{ 'अनजान रिक्वेस्ट में पिन डाला' if current_lang == 'hi' else 'Entered PIN on collect request' }}
+        </span>
+      </div>
+    </div>
+
+    <div class="incident-btn-card" data-incident="clicked_link">
+      <div class="incident-icon-wrapper">
+        <i data-lucide="mouse-pointer-click" style="width: 16px; height: 16px;"></i>
+      </div>
+      <div>
+        <strong style="display: block; font-size: 13.5px; color: var(--brand-navy); margin-bottom: 2px;">
+          {{ 'संदिग्ध लिंक पर क्लिक किया' if current_lang == 'hi' else 'Clicked Suspicious Link' }}
+        </strong>
+        <span style="font-size: 11.5px; color: var(--text-secondary);">
+          {{ 'फर्जी पेज खोला या ऐप डाउनलोड किया' if current_lang == 'hi' else 'Opened phishing page or downloaded APK' }}
+        </span>
+      </div>
+    </div>
+
+    <div class="incident-btn-card" data-incident="shared_banking_info">
+      <div class="incident-icon-wrapper">
+        <i data-lucide="lock" style="width: 16px; height: 16px;"></i>
+      </div>
+      <div>
+        <strong style="display: block; font-size: 13.5px; color: var(--brand-navy); margin-bottom: 2px;">
+          {{ 'बैंक पासवर्ड / कार्ड विवरण भरा' if current_lang == 'hi' else 'Entered Banking Credentials' }}
+        </strong>
+        <span style="font-size: 11.5px; color: var(--text-secondary);">
+          {{ 'वेबसाइट पर गोपनीय जानकारी भरी' if current_lang == 'hi' else 'Entered NetBanking login or card digits' }}
+        </span>
+      </div>
+    </div>
+
+    <div class="incident-btn-card" data-incident="threat_call">
+      <div class="incident-icon-wrapper">
+        <i data-lucide="phone-off" style="width: 16px; height: 16px;"></i>
+      </div>
+      <div>
+        <strong style="display: block; font-size: 13.5px; color: var(--brand-navy); margin-bottom: 2px;">
+          {{ 'डिजिटल अरेस्ट / धमकी भरी कॉल' if current_lang == 'hi' else 'Threatening / Police Call' }}
+        </strong>
+        <span style="font-size: 11.5px; color: var(--text-secondary);">
+          {{ 'पुलिस/सीबीआई बनकर डराया गया' if current_lang == 'hi' else 'Digital Arrest / Power Cut threat' }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dynamic Incident Triage Output -->
+  <div id="emergencyTriageOutput"></div>
+
+  <!-- Searchable Bank 24x7 Hotlines Directory -->
+  <div class="surface-card" style="margin-top: 28px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 14px;">
+      <h4 style="margin: 0; font-size: 1.15rem; color: var(--brand-navy); display: flex; align-items: center; gap: 7px;">
+        <i data-lucide="building" style="width: 16px; height: 16px; color: var(--brand-teal);"></i>
+        <span>{{ 'प्रमुख बैंकों के आपातकालीन फ्रॉड डेस्क' if current_lang == 'hi' else '24x7 Bank Emergency Fraud Desks' }}</span>
+      </h4>
+      <input type="text" id="bankSearchInput" class="form-control" style="max-width: 240px; padding: 6px 10px; font-size: 12.5px;" placeholder="{{ 'बैंक खोजें (e.g. SBI, HDFC)...' if current_lang == 'hi' else 'Filter banks (e.g. SBI, HDFC)...' }}">
+    </div>
+
+    <div style="overflow-x: auto;">
+      <table class="bank-directory-table">
+        <thead>
+          <tr>
+            <th>{{ 'बैंक' if current_lang == 'hi' else 'Bank Name' }}</th>
+            <th>{{ 'टोल-फ्री हेल्पलाइन' if current_lang == 'hi' else 'Toll-Free Helpline' }}</th>
+            <th>{{ 'कार्ड ब्लॉक एसएमएस' if current_lang == 'hi' else 'Quick Block SMS' }}</th>
+            <th>{{ 'मोबाइल ऐप' if current_lang == 'hi' else 'Official Mobile App' }}</th>
+          </tr>
+        </thead>
+        <tbody id="bankDirectoryBody">
+          <tr>
+            <td><strong>State Bank of India (SBI)</strong></td>
+            <td><a href="tel:18001234">1800 1234</a> / <a href="tel:18002100">1800 2100</a></td>
+            <td>SMS "BLOCK" to 567676</td>
+            <td>YONO SBI</td>
+          </tr>
+          <tr>
+            <td><strong>HDFC Bank</strong></td>
+            <td><a href="tel:18001600">1800 1600</a> / <a href="tel:18002600">1800 2600</a></td>
+            <td>SMS "BLOCK" to 5676712</td>
+            <td>HDFC MobileBanking</td>
+          </tr>
+          <tr>
+            <td><strong>ICICI Bank</strong></td>
+            <td><a href="tel:18001080">1800 1080</a></td>
+            <td>SMS "BLOCK" to 5676766</td>
+            <td>iMobile Pay</td>
+          </tr>
+          <tr>
+            <td><strong>Punjab National Bank (PNB)</strong></td>
+            <td><a href="tel:18001802222">1800 180 2222</a></td>
+            <td>SMS "HOT &lt;CardNo&gt;" to 5607040</td>
+            <td>PNB ONE</td>
+          </tr>
+          <tr>
+            <td><strong>Axis Bank</strong></td>
+            <td><a href="tel:18004195959">1800 419 5959</a></td>
+            <td>SMS "BLOCKCARD" to 5676782</td>
+            <td>Axis Mobile</td>
+          </tr>
+          <tr>
+            <td><strong>Bank of Baroda</strong></td>
+            <td><a href="tel:18005700">1800 5700</a></td>
+            <td>SMS "BLOCK" to 8422009988</td>
+            <td>bob World</td>
+          </tr>
+          <tr>
+            <td><strong>Paytm Payments Bank / Wallet</strong></td>
+            <td><a href="tel:01204456456">0120 4456 456</a></td>
+            <td>In-App 24x7 Helpdesk</td>
+            <td>Paytm App</td>
+          </tr>
+          <tr>
+            <td><strong>PhonePe</strong></td>
+            <td><a href="tel:08068727374">080 6872 7374</a></td>
+            <td>In-App Support Helpdesk</td>
+            <td>PhonePe App</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/emergency.js') }}"></script>
+{% endblock %}
