@@ -1,0 +1,12 @@
+.git
+.env
+.env.local
+.env.*
+!.env.example
+tests/
+__pycache__/
+*.pyc
+data/*.db
+*.sqlite3
+.DS_Store
+Thumbs.db

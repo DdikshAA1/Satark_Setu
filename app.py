@@ -5,7 +5,7 @@ and defines security and error handling policies.
 """
 
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from config import Config
 import database
 
@@ -13,12 +13,20 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
-    # Ensure data directory exists
-    os.makedirs(os.path.join(app.root_path, 'data'), exist_ok=True)
+    # Ensure database directory exists (failsafe for serverless read-only filesystems)
+    try:
+        db_dir = os.path.dirname(Config.DATABASE_PATH)
+        if db_dir:
+            os.makedirs(db_dir, exist_ok=True)
+    except Exception:
+        pass
 
     # Initialize SQLite database schema and baseline telemetry
     with app.app_context():
-        database.init_db()
+        try:
+            database.init_db()
+        except Exception:
+            pass
 
     # Register blueprints
     from routes.api import api_bp
